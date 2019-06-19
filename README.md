@@ -27,7 +27,7 @@ Configure `KettleSettings` section in file `src\Smarter.iKettle.Api\appsettings.
 - WaterSensorMax - The maximum value that you could read from the water sensor when the kettle was full
 - WaterSensorMin - The minimum value that you could read from the water sensor when the kettle was empty
 
-Note: Read water sensor value from `/api/v2/kettle/status` endpoint
+Note: Read water sensor value from `/api/v2/kettle/details` endpoint
 
 ## Usage
 
@@ -62,14 +62,14 @@ $ docker run -d --rm -p 5021:80 -e "KettleSettings:Host=ip_address" -e "KettleSe
 
 ## API
 
-### /api/v2/kettle/status
+### /api/v2/kettle/details
 
 #### GET
 ##### Responses
 
 | Code | Description | Schema |
 | ---- | ----------- | ------ |
-| 200 | Success | [KettleStatus](#kettlestatus) |
+| 200 | Success | [Details](#details) |
 | default |  | [ProblemDetails](#problemdetails) |
 ---
 ### /api/v2/kettle/boil
@@ -129,7 +129,7 @@ $ docker run -d --rm -p 5021:80 -e "KettleSettings:Host=ip_address" -e "KettleSe
 ### Models
 
 
-#### KettleStatus
+#### Details
 
 | Name | Type | Description | Required |
 | ---- | ---- | ----------- | -------- |

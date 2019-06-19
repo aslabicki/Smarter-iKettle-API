@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Threading.Tasks;
+using Smarter.iKettle.Application.Models.Enums;
 
 namespace Smarter.iKettle.Infrastructure
 {
@@ -52,7 +53,7 @@ namespace Smarter.iKettle.Infrastructure
             return EnsureSuccessResponse(response);
         }
 
-        public async Task<KettleStatus> GetStatus()
+        public async Task<Details> GetDetails()
         {
             var response = await GetResponse();
 
@@ -64,15 +65,15 @@ namespace Smarter.iKettle.Infrastructure
             var responseArray = response.ToArray();
             var waterSensor = (responseArray[3] << 8) + responseArray[4];
 
-            var kettleStatus = new KettleStatus
+            var details = new Details
             {
-                Status = (KettleStatus.StatusType)responseArray[1],
+                Status = (KettleStatus)responseArray[1],
                 Temperature = responseArray[2],
                 WaterSensor = waterSensor,
                 WaterPercent = WaterPercentHelper.Calculate(waterSensor, settings.WaterSensorMax, settings.WaterSensorMin)
             };
 
-            return kettleStatus;
+            return details;
         }
 
         private async Task<byte[]> GetResponse(byte[] command = null)

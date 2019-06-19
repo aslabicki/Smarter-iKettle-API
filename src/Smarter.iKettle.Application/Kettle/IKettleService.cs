@@ -7,7 +7,7 @@ namespace Smarter.iKettle.Application.Kettle
     {
         Task Boil();
 
-        Task<KettleStatus> GetStatus();
+        Task<Details> GetDetails();
 
         Task Heat(int temperature, int keepWarmMinutes);
 

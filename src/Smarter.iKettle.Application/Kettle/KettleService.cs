@@ -16,8 +16,8 @@ namespace Smarter.iKettle.Application.Kettle
         public async Task Boil()
             => await kettleClient.Boil();
 
-        public async Task<KettleStatus> GetStatus()
-            => await kettleClient.GetStatus();
+        public async Task<Details> GetDetails()
+            => await kettleClient.GetDetails();
 
         public async Task Heat(int temperature, int keepWarmMinutes)
             => await kettleClient.Heat(temperature, keepWarmMinutes);

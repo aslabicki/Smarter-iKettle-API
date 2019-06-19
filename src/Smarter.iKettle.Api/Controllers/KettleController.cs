@@ -23,16 +23,16 @@ namespace Smarter.iKettle.Api.Controllers
         /// Gets full details about kettle.
         /// </summary>
         /// <returns>Kettle status, temperature, value from the water sensor, percentage of filling, position.</returns>
-        [HttpGet("status")]
-        [ProducesResponseType(typeof(KettleStatus), StatusCodes.Status200OK)]
+        [HttpGet("details")]
+        [ProducesResponseType(typeof(Details), StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult<KettleStatus>> GetStatus()
+        public async Task<ActionResult<Details>> GetDetails()
         {
-            var result = await kettleService.GetStatus();
+            var result = await kettleService.GetDetails();
 
             if(result is null)
             {
-                BadRequest("Unable to get kettle status");
+                BadRequest("Unable to get kettle details");
             }
 
             return Ok(result);
