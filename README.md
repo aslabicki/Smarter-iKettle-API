@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/aslabicki/Smarter-iKettle-API.svg?branch=master)](https://travis-ci.org/aslabicki/Smarter-iKettle-API)
 
 # Smarter iKettle API
 
