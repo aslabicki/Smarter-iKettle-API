@@ -30,10 +30,33 @@ Note: Read water sensor value from `/api/v2/kettle/status` endpoint
 
 ## Usage
 
+### Run locally
+
 To run application go to `src\Smarter.iKettle.Api` folder and run command:
 
 ```sh
 $ dotnet run .
+```
+
+### Run in docker
+
+To run application in docker container run commands:
+
+1. Pull image from Docker Hub Build container
+
+```sh
+$ docker pull aslabicki/smarter-ikettle-api
+```
+
+Or go to root folder and build yourself
+
+```sh
+$ docker build -t smarter-ikettle-api .
+```
+
+2. Start container
+```sh
+$ docker run -d --rm -p 5021:80 -e "KettleSettings:Host=ip_address" -e "KettleSettings:Port=2081" -e "KettleSettings:WaterSensorMax=2250" -e "KettleSettings:WaterSensorMin=2080" smarter-ikettle-api
 ```
 
 ## API
