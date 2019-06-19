@@ -43,13 +43,13 @@ $ dotnet run .
 
 To run application in docker container run commands:
 
-1. Pull image from Docker Hub Build container
+1. Pull image from Docker Hub
 
 ```sh
 $ docker pull aslabicki/smarter-ikettle-api
 ```
 
-Or go to root folder and build yourself
+Or go to root folder and build image locally
 
 ```sh
 $ docker build -t smarter-ikettle-api .
