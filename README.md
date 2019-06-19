@@ -7,7 +7,36 @@ Using this API you can very easily control your kettle from any computer, phone 
 
 ## Requirements
 
-The only thing you need to run this API is dotnet core 2.2 runtime, which you can download [here](https://dotnet.microsoft.com/download)
+The things you need to run this API is dotnet core 2.2 runtime, which you can download [here](https://dotnet.microsoft.com/download) or docker to run application in a container and connected kettle to your local network.
+
+## Integrations
+
+Smarter iKettle API can be integrated with every home automation solution because it uses web API.
+
+<img align="left" height="100px" width="100px" src="https://user-images.githubusercontent.com/15276598/59797657-8f899980-92e0-11e9-9461-408a9468a341.png">
+
+### Home Assistant
+Sample configuration
+
+```yaml
+switch:
+  platform: command_line
+  switches: 
+    ikettle:
+      friendly_name: Smarter iKettle 2.0
+      command_on: >-
+        curl -d -X POST http://192.168.1.10:5021/api/v2/kettle/boil
+      command_off: >-
+        curl -d -X POST http://192.168.1.10:5021/api/v2/kettle/interrupt
+      command_state: >-
+        curl -sb -H "Accept: application/json" http://192.168.1.10:5021/api/v2/kettle/details
+      value_template: >-
+        {%- if value_json['status'] == 1 -%}
+        {{ true }}
+        {%- else -%}
+        {{ false }}
+        {%- endif -%}
+```
 
 ## Configuration
 
@@ -27,7 +56,9 @@ Configure `KettleSettings` section in file `src\Smarter.iKettle.Api\appsettings.
 - WaterSensorMax - The maximum value that you could read from the water sensor when the kettle was full
 - WaterSensorMin - The minimum value that you could read from the water sensor when the kettle was empty
 
-Note: Read water sensor value from `/api/v2/kettle/details` endpoint
+If you run the application in docker container, then the easiest way to override those settings are provides environment variables during run container (e.g. -e "KettleSettings: Host=ip_address" -e "KettleSettings: Port=2081" -e "KettleSettings: WaterSensorMax=2250" -e "KettleSettings: WaterSensorMin=2080")
+
+Note: You can read the water sensor value from `/api/v2/kettle/details` endpoint
 
 ## Usage
 
@@ -49,7 +80,7 @@ To run application in docker container run commands:
 $ docker pull aslabicki/smarter-ikettle-api
 ```
 
-Or go to root folder and build image locally
+  Or go to root folder and build image locally
 
 ```sh
 $ docker build -t smarter-ikettle-api .
