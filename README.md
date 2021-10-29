@@ -2,12 +2,12 @@
 
 # Smarter iKettle API
 
-Smarter iKettle API is a web API based on ASP.NET Core 2.2, which wrapped communication with kettle.
+Smarter iKettle API is a web API based on .NET 5, which wrapped communication with kettle.
 Using this API you can very easily control your kettle from any computer, phone or home automation platform.
 
 ## Requirements
 
-The things you need to run this API is dotnet core 2.2 runtime, which you can download [here](https://dotnet.microsoft.com/download) or docker to run application in a container and connected kettle to your local network.
+The things you need to run this API is .NET 5 runtime, which you can download [here](https://dotnet.microsoft.com/download) or docker to run application in a container and connected kettle to your local network.
 
 ## Integrations
 
@@ -88,7 +88,7 @@ $ docker build -t smarter-ikettle-api .
 
 2. Start container
 ```sh
-$ docker run -d --rm -p 5021:80 -e "KettleSettings:Host=ip_address" -e "KettleSettings:Port=2081" -e "KettleSettings:WaterSensorMax=2250" -e "KettleSettings:WaterSensorMin=2080" smarter-ikettle-api
+$ docker run -d --rm -p 5021:80 -e "KettleSettings__Host=ip_address" -e "KettleSettings__Port=2081" -e "KettleSettings__WaterSensorMax=2250" -e "KettleSettings__WaterSensorMin=2080" smarter-ikettle-api
 ```
 
 ## API

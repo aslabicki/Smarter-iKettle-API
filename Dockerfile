@@ -1,13 +1,22 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:2.2 AS build-env
+FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
 WORKDIR /app
+EXPOSE 80
+EXPOSE 443
 
-COPY . /app/
-RUN dotnet publish src/Smarter.iKettle.Api/Smarter.iKettle.Api.csproj  -c Release -o out
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+WORKDIR /src
+COPY ["src/Smarter.iKettle.Api/Smarter.iKettle.Api.csproj", "src/Smarter.iKettle.Api/"]
+COPY ["src/Smarter.iKettle.Application/Smarter.iKettle.Application.csproj", "src/Smarter.iKettle.Application/"]
+COPY ["src/Smarter.iKettle.Infrastructure/Smarter.iKettle.Infrastructure.csproj", "src/Smarter.iKettle.Infrastructure/"]
+RUN dotnet restore "src/Smarter.iKettle.Api/Smarter.iKettle.Api.csproj"
+COPY . .
+WORKDIR "/src/src/Smarter.iKettle.Api"
+RUN dotnet build "Smarter.iKettle.Api.csproj" -c Release -o /app/build
 
-# Build runtime image
-FROM mcr.microsoft.com/dotnet/core/aspnet:2.2
+FROM build AS publish
+RUN dotnet publish "Smarter.iKettle.Api.csproj" -c Release -o /app/publish
+
+FROM base AS final
 WORKDIR /app
-
-COPY --from=build-env /app/src/Smarter.iKettle.Api/out .
-
+COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "Smarter.iKettle.Api.dll"]
