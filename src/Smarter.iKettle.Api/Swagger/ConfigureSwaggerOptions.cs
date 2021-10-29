@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Smarter.iKettle.Api.Swagger
@@ -26,7 +26,7 @@ namespace Smarter.iKettle.Api.Swagger
         {
             foreach(var description in provider.ApiVersionDescriptions)
             {
-                options.SwaggerDoc(description.GroupName, new Info() { Version = description.ApiVersion.ToString() });
+                options.SwaggerDoc(description.GroupName, new OpenApiInfo() { Version = description.ApiVersion.ToString() });
             }
         }
     }
